@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="config.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    plz wait...
+</body>
+</html>
+
+<script>
+    $.ajax({
+        type : 'get',
+        url : API ,
+        data : {},
+        dataType : 'json',
+        success : function (msg) {
+            if(msg.code == '1') {
+                window.location.href = HOST + 'page/User/login.html';
+            }else{
+                var url = window.location;
+                if (url){
+                    window.location.href = url;
+                }else{
+                    window.location.href = HOST + 'page/index.html';
+                }
+            }
+        }
+    })
+</script>

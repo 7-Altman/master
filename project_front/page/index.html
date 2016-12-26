@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shouye</title>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="../common.js"></script>
+    <script src="../check.js"></script>
+</head>
+<body>
+<h1>这是首页</h1>
+<input type="button" id="btn" value="退出">
+</body>
+</html>
+<script>
+    $('#btn').click(function (e) {
+        clearCookie('user_id');
+        $.ajax({
+            tyep: 'get',
+            url: API + 'Home/User/logout',
+            data: {},
+            dataType: 'json',
+            success: function (msg) {
+                alert(msg.message);
+                window.location.href = HOST + 'page/User/login.html';
+            }
+        })
+    })
+</script>

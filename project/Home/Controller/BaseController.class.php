@@ -11,18 +11,28 @@ use Think\Controller;
 
 class BaseController extends Controller
 {
+    /**
+     * BaseController constructor.
+     * 校验登录权限，
+     */
     function __construct()
     {
         parent::__construct();
-        //@session_start();
-        //ACTION_NAME
-        //CONTROLLER_NAME
+        $action = ACTION_NAME;
+        $controller = CONTROLLER_NAME;
         $allow_list = array(
-            'User' => 'login',
-            'User' => 'logout',
-            //'User' => '',
+            'User_login',
+            'User_logout',
+            'User_check',
+            'Index_verify',
         );
+        $userid = $_SESSION['userid'];
+        $c_a_name = $controller . '_' . $action;
+        if ($userid == '' && !in_array($c_a_name, $allow_list)) {
+            $this->error('未登录','/Home/User/login',5);
+        }
     }
+
 
     /**
      * @description get请求

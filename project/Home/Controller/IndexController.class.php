@@ -10,14 +10,7 @@ class IndexController extends BaseController
         $this->display();
     }
 
-    public function get_verify()
-    {
-        echo md5('123456') . "<br>";
-        echo session_id();
-        echo "<pre>";
-        print_r($_SESSION);
-        //echo $_SESSION['verify_code'];
-    }
+
 
     public function verify()
     {
