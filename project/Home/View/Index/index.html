@@ -46,7 +46,7 @@
                     <el-breadcrumb-item>{{breadcrumb1}}</el-breadcrumb-item>
                     <el-breadcrumb-item>{{breadcrumb2}}</el-breadcrumb-item>
                 </el-breadcrumb>
-                <iframe id="checkListFrame" src="{:U('/Home/UserInfo/index')}" frameborder="0" width="100%" height="90%" scrolling="auto"></iframe>
+                <iframe id="checkListFrame" src="" frameborder="0" width="100%" height="80%" scrolling="auto"></iframe>
             </el-col>
 
         </el-row>
@@ -76,7 +76,7 @@
                         items: [
                             {
                                 text: "tooltip",
-                                uri: "./tooltip.html?123",
+                                uri: "{:U('/Home/UserInfo/index')}",
                             },{
                                 text: "表单2",
                                 uri: "./form.html?1233",

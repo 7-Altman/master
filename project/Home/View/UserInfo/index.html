@@ -14,38 +14,14 @@
     <template>
         <el-button type="primary" @click="dialogFormVisible = true">新建</el-button>
 
-        <!--<el-button plain @click.native="open3">-->
-            <!--成功-->
-        <!--</el-button>-->
-        <!--<el-button plain @click.native="open4">-->
-            <!--警告-->
-        <!--</el-button>-->
-        <!--<el-button plain @click.native="open5">-->
-            <!--消息-->
-        <!--</el-button>-->
-        <!--<el-button plain @click.native="open6">-->
-            <!--错误-->
-        <!--</el-button>-->
-
-
         <el-button type="primary" icon="more" class="right_search" @click="saveExcel"></el-button>
         <el-input placeholder="搜索" class="right_search" icon="search" v-model="input2" @click="handleIconClick" @keyup.enter.native="handleIconClick">
         </el-input>
 
-        <el-table :data="tableData" border style="width: 100%" height="920">
-            <el-table-column fixed :context="_self" inline-template label="操作" width="150">
-                <div>
-                    <el-button size="small" @click="handleEdit($index, row)">
-                        编辑
-                    </el-button>
-                    <el-button size="small" type="danger" @click="handleDelete($index, row)">
-                        删除
-                    </el-button>
-                </div>
-            </el-table-column>
+        <el-table :data="tableData" border style="width: 100%" height="920" @cell-click="handleCellClick">
 
-            <el-table-column fixed prop="date" :label=tableHead.date width="150">
-            </el-table-column>
+
+
             <el-table-column prop="name" :label=tableHead.name width="120">
             </el-table-column>
             <el-table-column prop="province" :label=tableHead.province width="120">
@@ -54,7 +30,21 @@
             </el-table-column>
             <el-table-column prop="address" :label=tableHead.address width="300">
             </el-table-column>
-            <el-table-column prop="zip" :label=tableHead.zip width="120">
+            <el-table-column prop="gander" :label=tableHead.gander width="120">
+            </el-table-column>
+            <el-table-column  prop="area" :label=tableHead.area width="150">
+            </el-table-column>
+            <el-table-column  prop="remark" :label=tableHead.remark width="150">
+            </el-table-column>
+
+            <el-table-column  :context="_self" inline-template label="操作" width="150">
+                <div>
+                    <el-button type="primary" icon="edit" size="small" @click="handleEdit($index, row)" >
+
+                    </el-button>
+                    <el-button type="danger" icon="delete" size="small"  @click="handleDelete($index, row)"></el-button>
+
+                </div>
             </el-table-column>
         </el-table>
 
@@ -86,21 +76,23 @@
     </template>
 
     <script>
-        var URL =
         var Main = {
             data() {
             return {
                 input2: "",
                 tableHead: {
-                    "date": "日期",
+                    "remark": "备注",
                     "name": "姓名",
                     "province": "省份",
                     "city": "市区",
                     "address": "地址",
-                    "zip": "邮编",
+                    "gander": "性别",
+                    "area":"区域",
                 },
                 tableData1: [],
-                tableData: [],
+                tableData: [
+
+                ],
                 tablePage: 1,
                 pageSize: 100,
                 totalNum: 1,
@@ -121,14 +113,15 @@
         },
 
         beforeMount: function(){
-            this.$http.get("/ele/echo.php?").then((response) => {
+            this.$http.get("getUserInfo").then((response) => {
                 if (response.status !== 200) {
                 this.$message({
                     type: 'info',
                     message: '请求失败, 请重试'
                 });
             }
-            this.tableData1 = JSON.parse(response.data)
+            this.tableData1 = response.data
+//            this.tableData1 = JSON.parse(response.data)
             this.tableData = this.tableData1.slice(0, this.pageSize )
             this.totalNum = this.tableData1.length
         }, (response) => {
@@ -145,51 +138,14 @@
             handleDelete(index, row) {
                 console.log(index, row);
             },
-            open3() {
-                this.$notify({
-                    title: '成功',
-                    message: '这是一条成功的提示消息',
-                    type: 'success'
-                });
-            },
 
-            open4() {
-                this.$notify({
-                    title: '警告',
-                    message: '这是一条警告的提示消息',
-                    type: 'warning'
-                });
-            },
+            handleCellClick(row, column, cell){
+//                console.log(row.id);
+//                console.log(column.property)
+//                console.log(cell)
+                var cellname = column.property;
+//                console.log(row[cellname]);
 
-            open5() {
-                this.$notify.info({
-                    title: '消息',
-                    message: '这是一条消息的提示消息'
-                });
-
-                setInterval(function(){
-                    this.$notify.info({
-                        title: '消息',
-                        message: '这是一条消息的提示消息'
-                    });
-                }.bind(this), 200)
-
-            },
-
-            open6() {
-                this.$notify.error({
-                    title: '错误',
-                    message: '这是一条错误的提示消息'
-                });
-            },
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
             },
             handleIconClick(ev) {
                 if(this.input2){
@@ -210,7 +166,7 @@
                 }
             },
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                console.log(`每页 ${val} 条`)
             },
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
@@ -222,6 +178,6 @@
             }
         }
         }
-        var Ctor = Vue.extend(Main)
-        new Ctor().$mount('#app')
+        var Ctor = Vue.extend(Main);
+        new Ctor().$mount('#app');
     </script>
