@@ -6,10 +6,8 @@
  * Time: 14:23
  */
 namespace Home\Controller;
-
-use Think\Controller;
-
-class BaseController extends Controller
+use Think\Controller\RestController;
+class BaseController extends RestController
 {
     /**
      * BaseController constructor.
@@ -29,7 +27,7 @@ class BaseController extends Controller
         $userid = $_SESSION['userid'];
         $c_a_name = $controller . '_' . $action;
         if ($userid == '' && !in_array($c_a_name, $allow_list)) {
-            $this->error('未登录','/Home/User/login',5);
+            $this->error('未登录','/Home/User/login',3);
         }
     }
 

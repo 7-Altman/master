@@ -23,38 +23,31 @@ class UserController extends BaseController
         $_SESSION['userid'] = '';
         $_SESSION['name'] = '';
         $_SESSION['role_id'] = '';
-        echo '{"code":0, "message" : "ok"}';
+        $this->success('退出成功','/Home/User/login',1);
     }
 
     public function check()
     {
-        $user_info = \I("post");
+        $username = \I("post.username");
+        $password = \I("post.password");
         $userModel = \M('user');
-        $code = $user_info['verfiy_code'];
-        $where['username'] = $user_info['username'];
-        $where['password'] = md5($user_info['password']);
+        $code = \I('post.verfiy_code');
+        $where['username'] = $username;
+        $where['password'] = md5($password);
         $res = $userModel->where($where)->select();
         $Verify = new \Think\Verify();
         $ver_res = $Verify->check($code);
         if (!$ver_res) {
-            echo '{"code":1,"message":"验证码错误"}';
-            die;
+            $this->error('验证码错误','/Home/User/login',2);
         }
         if (!$res) {
-            echo '{"code":1,"message":"账号密码错误"}';
-            die;
+            $this->error('账号密码错误','/Home/User/login',2);
         }else{
             $_SESSION['userid'] = $res[0]['id'];
             $_SESSION['username'] = $res[0]['username'];
             $_SESSION['name'] = $res[0]['name'];
             $_SESSION['role_id'] = $res[0]['role_id'];
-            $arr = array(
-                'code' => 0,
-                'message' => '登录成功',
-                'url' => 'page/index.html',
-                'user_id' => $res[0]['id'],
-            );
-            echo json_encode($arr, true);
+            $this->success('登录成功','/Home/Index/index',1);
         }
     }
 }
