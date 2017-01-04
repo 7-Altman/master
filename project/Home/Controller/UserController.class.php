@@ -30,14 +30,14 @@ class UserController extends BaseController
     {
         $username = \I("post.username");
         $password = \I("post.password");
-        $userModel = \M('user');
+        $userModel = \M('admin');
         $code = \I('post.verfiy_code');
         $where['username'] = $username;
         $where['password'] = md5($password);
         $res = $userModel->where($where)->select();
         $Verify = new \Think\Verify();
         $ver_res = $Verify->check($code);
-        if (!$ver_res) {
+        if ($ver_res) {
             $this->error('验证码错误','/Home/User/login',2);
         }
         if (!$res) {

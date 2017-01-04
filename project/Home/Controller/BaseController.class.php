@@ -26,9 +26,9 @@ class BaseController extends RestController
         );
         $userid = $_SESSION['userid'];
         $c_a_name = $controller . '_' . $action;
-        if ($userid == '' && !in_array($c_a_name, $allow_list)) {
-            $this->error('未登录','/Home/User/login',3);
-        }
+        // if ($userid == '' && !in_array($c_a_name, $allow_list)) {
+        //     $this->error('未登录','/Home/User/login',3);
+        // }
     }
 
 

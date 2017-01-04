@@ -1,18 +1,7 @@
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<script src="{$Think.config.JS}fileSaver.js"></script>
-<script src="{$Think.config.JS}util.js"></script>
-
-<link rel="stylesheet" type="text/css" href="{$Think.config.VUE}index.css">
-<link rel="stylesheet" type="text/css" href="{$Think.config.CSS}base.css">
-<link rel="stylesheet" type="text/css" href="{$Think.config.CSS}normalize.css">
-<script src="{$Think.config.VUE}vue.js"></script>
-<script src="{$Think.config.VUE}vue-resource.min.js"></script>
-<script src="{$Think.config.VUE}index.js"></script>
+<layout name="layout" />
 <div id="app">
     <template>
-        <el-button type="primary" @click="dialogFormVisible = true">新建</el-button>
+        <a href="{:U('Home/UserInfo/edit')}"><el-button type="primary" @click="create_user_info">新建</el-button></a>
 
         <el-button type="primary" icon="more" class="right_search" @click="saveExcel"></el-button>
         <el-input placeholder="搜索" class="right_search" icon="search" v-model="input2" @click="handleIconClick" @keyup.enter.native="handleIconClick">
@@ -70,11 +59,11 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button type="primary" @click="submitHandler = false">确 定</el-button>
             </div>
         </el-dialog>
     </template>
-
+</div>
     <script>
         var Main = {
             data() {
@@ -113,7 +102,7 @@
         },
 
         beforeMount: function(){
-            this.$http.get("getUserInfo").then((response) => {
+            this.$http.get("userInfo").then((response) => {
                 if (response.status !== 200) {
                 this.$message({
                     type: 'info',
@@ -138,7 +127,9 @@
             handleDelete(index, row) {
                 console.log(index, row);
             },
-
+            create_user_info(){
+                window.location.href = ""
+            },
             handleCellClick(row, column, cell){
 //                console.log(row.id);
 //                console.log(column.property)

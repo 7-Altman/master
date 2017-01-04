@@ -1,5 +1,6 @@
 <?php if (!defined('THINK_PATH')) exit();?><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>WTF?</title>
 </head>
 <script src="<?php echo (C("JS")); ?>util.js"></script>
 <script src="<?php echo (C("JS")); ?>jquery.min.js"></script>
@@ -70,52 +71,22 @@
                 breadcrumb2 : "",
 
                 menus: [
-                    {
-                        id: "1",
-                        text: "导航1",
-                        items: [
-                            {
-                                text: "tooltip",
-                                uri: "<?php echo U('/Home/UserInfo/index');?>",
-                            },{
-                                text: "表单2",
-                                uri: "./form.html?1233",
-                            },{
-                                text: "表格1",
-                                uri: "./table.html?1232",
-                            },
-                        ]
-                    },{
-                        id: "2",
-                        text: "导航2",
-                        items: [
-                            {
-                                text: "tooltip",
-                                uri: "./tooltip.html?123f",
-                            },{
-                                text: "表单2",
-                                uri: "./form.html?123d",
-                            },{
-                                text: "表格1",
-                                uri: "./table.html?123g",
-                            },
-                        ]
-                    },{
-                        id: "3",
-                        text: "导航3",
-                        items: [
-                            {
-                                text: "card",
-                                uri: "./card.html?12332",
-                            },{
-                                text: "表单2",
-                                uri: "./form.html?123fg",
-                            },{
-                                text: "表格1",
-                                uri: "./table.html?123dds",
-                            },
-                        ]
-                    },
+                   {
+                       id: "1",
+                       text: "导航1",
+                       items: [
+                           {
+                               text: "用户信息",
+                               uri: "<?php echo U('/Home/UserInfo/index');?>",
+                           },{
+                               text: "表单2",
+                               uri: "<?php echo U('/Home/UserInfo/index');?>  ",
+                           },{
+                               text: "表格1",
+                               uri: "<?php echo U('/Home/UserInfo/index');?>",
+                           },
+                       ]
+                   },
                 ],
                 menus1: {},
             }

@@ -13,4 +13,5 @@ class UserModel extends Model
 {
     protected $insertFields = array('name', 'age', 'gender', 'province', 'city', 'area', 'address', 'remark');
     protected $updateFields = array('name', 'age', 'gender', 'province', 'city', 'area', 'address', 'remark');
+
 }

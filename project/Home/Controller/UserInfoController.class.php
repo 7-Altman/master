@@ -11,15 +11,13 @@ use Home\Controller;
 
 class UserInfoController extends BaseController
 {
-    protected $allowMethod = array('get', 'post', 'put', 'delete');
-    public $infoModel;
 
     public function index()
     {
         $this->display();
     }
 
-    public function getUserInfo()
+    public function userInfo()
     {
         $infoModel = M('info');
         if (IS_GET) {
@@ -27,7 +25,7 @@ class UserInfoController extends BaseController
             $this->ajaxReturn($userInfo, 'json');
         } else {
             $data = $infoModel->create();
-            if ($data['id'] > 0) {
+            if ($data['id'] == 0) {
                 $this->data($data)->add();
             } else {
                 $this->data($data)->save();
@@ -35,37 +33,42 @@ class UserInfoController extends BaseController
         }
     }
 
-    public function addInfo()
+    public function gaode()
     {
-        $arr = [];
-        for ($i = 401;$i <= 600; $i++ ) {
-            if($i<10){
-                $i = 0 . $i;
+        $location = \I('get.location');
+        $url = 'http://restapi.amap.com/v3/geocode/regeo?key=2d4760859d8d5d5142028805a912cade&location=' . $location;
+        $res = $this->getUrlMsg($url);
+        echo json_encode($res, true);
+    }
+
+    public function getlat()
+    {
+        $this->display();
+    }
+
+    public function edit()
+    {
+        $this->display();
+    }
+
+    public function test()
+    {
+        $this->display();
+    }
+
+    public function testInfo()
+    {
+        $testModel = \M('test');
+        if (IS_GET) {
+            //$testInfo = $testModel->field('name1, group_concat(name2) name2')->group("name1")->select();
+            $testInfo = $testModel->select();
+            $res = [];
+            foreach ($testInfo as $k => $v) {
+                $res[$k]['name1'] = $v['name1'];
+                $res[$k]['name2'] = explode(',' , $v['name2']);
+                $res[$k]['count'] = count(explode(',' , $v['name2']));
             }
-            $arr[] = array(
-                'name' => '王小虎' . $i,
-                'age' => 22,
-                'gander' => 1,
-                'province' => '北京',
-                'city' => '北京',
-                'area' => '通州',
-                'address' => '永顺',
-                'remark' => '。。。',
-            );
+            $this->ajaxReturn($testInfo, 'json');
         }
-        //$infoModel = M('info');
-        //$res = $infoModel->addAll($arr);
-    }
-
-    public function update()
-    {
-        $data = $infoModel->create();
-        $infoModel->data($data)->save();
-    }
-
-    public function save()
-    {
-        $data = $infoModel->create();
-        $infoModel->data($data)->add();
     }
 }
